@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="200dip"
+              android:layout_marginEnd="16dp"
+              android:layout_marginStart="16dp"
+              android:background="?android:attr/selectableItemBackground"
+              android:focusable="true"
+              android:gravity="center_vertical"
+              android:minHeight="200dip">
+
+        <com.vipercn.viper4android_v3.preference.EqualizerSurface
+            android:id="@id/FrequencyResponse"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="6dip"
+            android:layout_marginEnd="16dip"
+            android:layout_marginStart="16dip"
+            android:layout_marginTop="6dip"/>
+
+</LinearLayout>

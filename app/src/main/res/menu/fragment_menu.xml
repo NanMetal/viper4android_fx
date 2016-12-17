@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/force_enable" android:title="@string/pref_force_enable_text" android:checkable="true" />
+    <item android:id="@id/compatible" android:title="@string/text_commode" />
+    <item android:id="@id/drvstatus" android:title="@string/text_drv_status" />
+</menu>

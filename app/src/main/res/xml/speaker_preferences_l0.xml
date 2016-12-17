@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <com.vipercn.viper4android_v3.preference.TopSwitchPreference
+        android:key="viper4android.speakerfx.enable"/>
+
+    <com.vipercn.viper4android_v3.preference.CategorySwitchPreference
+        android:disableDependentsState="false"
+        android:key="viper4android.headphonefx.fireq.enable"
+        android:title="@string/pref_equalizer_title"/>
+    <com.vipercn.viper4android_v3.preference.SummariedListPreference
+        android:defaultValue="0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0;"
+        android:dialogTitle="@string/pref_equalizer_preset_title"
+        android:entries="@array/equalizer_preset_modes"
+        android:entryValues="@array/equalizer_preset_values"
+        android:key="viper4android.headphonefx.fireq"
+        android:title="@string/pref_equalizer_preset_title"/>
+    <com.vipercn.viper4android_v3.preference.EqualizerPreference
+        android:key="viper4android.headphonefx.fireq.custom"/>
+
+    <com.vipercn.viper4android_v3.preference.CategorySwitchPreference
+        android:disableDependentsState="false"
+        android:key="viper4android.speakerfx.spkopt.enable"
+        android:title="@string/pref_spk_opt_title"/>
+
+    <com.vipercn.viper4android_v3.preference.CategorySwitchPreference
+        android:disableDependentsState="false"
+        android:key="viper4android.headphonefx.playbackgain.enable"
+        android:title="@string/pref_xloud_title"/>
+    <com.vipercn.viper4android_v3.preference.SummariedListPreference
+        android:defaultValue="50"
+        android:dialogTitle="@string/dialog_effect"
+        android:entries="@array/playbackgain_ratio"
+        android:entryValues="@array/playbackgain_ratio_values"
+        android:key="viper4android.headphonefx.playbackgain.ratio"
+        android:title="@string/pref_effect_title"/>
+
+</PreferenceScreen>

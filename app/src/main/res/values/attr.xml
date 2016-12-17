@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SeekBarPreference">
+        <attr name="maximum" format="integer"/>
+        <attr name="minimum" format="integer"/>
+        <attr name="step" format="integer"/>
+        <attr name="divisor" format="integer"/>
+        <attr name="formatString" format="string"/>
+        <attr name="leftText" format="string"/>
+        <attr name="rightText" format="string"/>
+        <attr name="offset" format="integer"/>
+        <!-- https://en.wikipedia.org/wiki/Sound_pressure -->
+        <attr name="spl" format="boolean"/>
+        <attr name="android:defaultValue"/>
+        <attr name="android:entries"/>
+        <attr name="android:entryValues"/>
+    </declare-styleable>
+
+    <attr name="switchBarTheme" format="reference" />
+    <attr name="switchBarMarginStart" format="dimension" />
+    <attr name="switchBarMarginEnd" format="dimension" />
+</resources>

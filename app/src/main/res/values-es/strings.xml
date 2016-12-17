@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ViPER4Android FX</string>
+    <string name="audio_effects">Efectos de audio</string>
+    <string name="bluetooth_title">Bluetooth</string>
+    <string name="dialog_colorfulmusic">Intensidad del campo envolvente</string>
+    <string name="dialog_colorfulmusic_mi">Intensidad de Mid Image</string>
+    <string name="dialog_cure_crossfeed">Nivel binaural</string>
+    <string name="dialog_diffsurr_ms">Retardo</string>
+    <string name="dialog_effect">Intensidad</string>
+    <string name="dialog_vhs_qual">Nivel</string>
+    <string name="eq_preset_acoustic">Acústico</string>
+    <string name="eq_preset_bass_booster">Bajos potenciados</string>
+    <string name="eq_preset_bass_reducer">Bajos reducidos</string>
+    <string name="eq_preset_classical">Clásico</string>
+    <string name="eq_preset_custom">Personalizado</string>
+    <string name="eq_preset_deep">Profundo</string>
+    <string name="eq_preset_flat">Plano</string>
+    <string name="eq_preset_rock">Rock</string>
+    <string name="eq_preset_small_speakers">Parlantes pequeños</string>
+    <string name="eq_preset_treble_booster">Agudos potenciados</string>
+    <string name="eq_preset_treble_reducer">Agudos reducidos</string>
+    <string name="eq_preset_vocal_booster">Vocales potenciados</string>
+    <string name="headset_title">Auriculares</string>
+    <string name="left">Izquierda</string>
+    <string name="pref_analogx_enable">AnalogX</string>
+    <string name="pref_analogx_strength">Fuerza</string>
+    <string name="pref_colorfulmusic_enable">Campo Surround</string>
+    <string name="pref_colorfulmusic_title">Campo Surround</string>
+    <string name="pref_convolver_crosschannel">Canal cruzado</string>
+    <string name="pref_convolver_crosschannel_title">Canal cruzado</string>
+    <string name="pref_convolver_enable">Convolucionador</string>
+    <string name="pref_convolver_knl">Respuesta de impulso</string>
+    <string name="pref_equalizer_preset_title">Preestablecido</string>
+    <string name="pref_fidelity_title">Control de fidelidad</string>
+    <string name="pref_fidelity_vb_bassfreq">Frecuencia bajos</string>
+    <string name="pref_fidelity_vb_bassgain">Ganancia bajos</string>
+    <string name="pref_fidelity_vb_bassgain_title">Potencia bajos</string>
+    <string name="text_uninstall">Desinstalar controlador</string>
+    <string name="text_uiprefer">Preferencia de interfaz</string>
+    <string name="text_speaker">Altavoces</string>
+    <string name="text_supported">Soportado</string>
+    <string name="text_unsupported">No soportado</string>
+    <string name="text_savefxprofile">Guardar perfil</string>
+    <string name="text_profileload_tip">Aplicar perfil</string>
+    <string name="text_normal">Normal</string>
+    <string name="text_newfxprofile">Nuevo perfil…</string>
+    <string name="text_loadfxprofile">Cargar perfil</string>
+    <string name="text_lockeffect">Bloquear perfil</string>
+    <string name="text_install">Instalar controlador</string>
+    <string name="text_headset">Auriculares</string>
+    <string name="text_enabled">Habilitado</string>
+    <string name="text_drv_status">Estado del controlador</string>
+    <string name="text_disabled">Deshabilitado</string>
+    <string name="text_commode">Modo FX compatible</string>
+    <string name="text_checkupdate">Buscar actualizaciones</string>
+    <string name="text_changelog">Cambios</string>
+    <string name="text_cancel">Cancelar</string>
+    <string name="text_bluetooth">Bluetooth</string>
+    <string name="text_abnormal">Anormal</string>
+    <string name="summary_driver_notinstalled">No instalado</string>
+    <string name="summary_driver_installed">Versión: %s</string>
+    <string name="speaker_title">Altavoces</string>
+    <string name="settings_title">Configuración</string>
+    <string name="right">Derecha</string>
+    <string name="pref_diffsurr_title">Surround diferencial</string>
+    <string name="pref_dynamicsystem_bass">Bajos dinámicos</string>
+    <string name="pref_convolver_title">Convolucionador</string>
+    <string name="pref_fidelity_vb_mode">Modo de bajos</string>
+    <string name="pref_fidelity_vc_bassgain">Claridad</string>
+    <string name="pref_fidelity_vc_mode">Modo de claridad</string>
+    <string name="pref_force_enable_text">Forzar activación del controlador</string>
+    <string name="pref_output_gain">Ganancia de salida</string>
+    <string name="pref_output_pan">Balance</string>
+    <string name="pref_playback_maxgain">Ganancia máxima</string>
+    <string name="pref_playback_output_threshold">Máxima ganancia de salida</string>
+    <string name="pref_reverb_title">Reverberación</string>
+    <string name="about_title">Acerca de ViPER4Android</string>
+    <string name="pref_dsp_enable">Activado</string>
+    <string name="enabled">Activado</string>
+    <string name="disabled">Desactivado</string>
+    <string name="pref_analogx_strength_title">Intensidad</string>
+    <string name="pref_convolver_knl_title">Impulso de respuesta</string>
+    <string name="pref_curesystem_title">Sistema de protección de audición</string>
+    <string name="pref_dynamicsystem_output">Dispositivo</string>
+    <string name="pref_dynamicsystem_tube_title">Simulador de tubo (6N1J)</string>
+    <string name="pref_effect_title">Intensidad</string>
+    <string name="pref_equalizer_title">FIREcualizador</string>
+    <string name="pref_fx_limiter_threshold">Límite</string>
+    <string name="pref_fx_limiter_title">Compuerta Master (Limitador)</string>
+    <string name="pref_fx_master_title">Potencia Master</string>
+    <string name="pref_analogx_summary_off">AnalogX está desactivado</string>
+    <string name="pref_analogx_summary_on">AnalogX está activado</string>
+    <string name="pref_colorfulmusic_summary_off">Campo Surround está desactivado</string>
+    <string name="pref_colorfulmusic_summary_on">Campo Surround está activado</string>
+    <string name="pref_convolver_summary_off">Convolucionador está desactivado</string>
+    <string name="pref_convolver_summary_on">Convolucionador está activado</string>
+    <string name="pref_curesystem_enable">Cure Tech+</string>
+    <string name="pref_curesystem_summary_off">Cure Tech+ está desactivado</string>
+    <string name="pref_curesystem_summary_on">Cure Tech+ está activado</string>
+    <string name="pref_diffsurr_enable">Surround diferencial</string>
+    <string name="pref_diffsurr_summary_off">Surround diferencial está desactivado</string>
+    <string name="pref_diffsurr_summary_on">Surround diferencial está activado</string>
+    <string name="pref_dynamicsystem_enable">Activado</string>
+    <string name="pref_dynamicsystem_output_title">Seleccionar dispositivo</string>
+    <string name="pref_dynamicsystem_summary_off">Sistema dinámico está desactivado</string>
+    <string name="pref_dynamicsystem_summary_on">Sistema dinámico está activado</string>
+    <string name="pref_dynamicsystem_title">Sistema dinámico</string>
+    <string name="pref_dynamicsystem_tube_summary_off">Simulador de tubo está desactivado</string>
+    <string name="pref_dynamicsystem_tube_summary_on">Simulador de tubo está activado</string>
+    <string name="pref_equalizer_enable">Activado</string>
+    <string name="pref_equalizer_summary_off">FIREcualizador está desactivado</string>
+    <string name="pref_equalizer_summary_on">FIREcualizador está activado</string>
+    <string name="pref_fidelity_vb_bassfreq_title">Frencuancia bajos</string>
+    <string name="pref_fidelity_vb_enable">Activar bajos ViPER</string>
+    <string name="pref_fidelity_vb_mode_title">Modo de bajos</string>
+    <string name="pref_fidelity_vb_summary_off">Bajos ViPER está desactivado</string>
+    <string name="pref_fidelity_vb_summary_on">Bajos ViPER está activado</string>
+    <string name="pref_fidelity_vc_bassgain_title">Intensidad</string>
+    <string name="pref_fidelity_vc_enable">Activar claridad ViPER</string>
+    <string name="pref_fidelity_vc_mode_title">Modo de claridad</string>
+    <string name="pref_fidelity_vc_summary_off">Claridad ViPER está desactivado</string>
+    <string name="pref_fidelity_vc_summary_on">Claridad ViPER está activado</string>
+    <string name="pref_playback_summary_off">Ganancia de reproducción está desactivado</string>
+    <string name="pref_playback_title">Ganancia de reproducción</string>
+    <string name="pref_playback_summary_on">Ganancia de reproducción está activado</string>
+    <string name="pref_reverb_damp">Factor de amortiguamiento</string>
+    <string name="pref_reverb_dry">Señal seca</string>
+    <string name="pref_reverb_enable">Activado</string>
+    <string name="pref_reverb_roomsize">Tamaño de habitación</string>
+    <string name="pref_reverb_summary_off">Reverberación está desactivado</string>
+    <string name="pref_reverb_summary_on">Reverberación está activado</string>
+    <string name="pref_reverb_wet">Señal húmeda</string>
+    <string name="pref_reverb_width">Campo de sonido</string>
+    <string name="pref_select_colorfulmusic_mi_title">Intensidad imagen media</string>
+    <string name="pref_select_colorfulmusic_title">Intensidad campo Surround</string>
+    <string name="pref_select_cure_cf_title">Nivel binaural</string>
+    <string name="pref_select_diffsurr_ms_title">Retardo</string>
+    <string name="pref_select_vhs_qual_title">Nivel</string>
+    <string name="pref_spk_opt_summary_off">Optimización de altavoces está desactivado</string>
+    <string name="pref_spk_opt_title">Optimización de altavoces</string>
+    <string name="pref_spk_opt_summary_on">Optimización de altavoces está activado</string>
+    <string name="pref_spkfx_limiter_threshold">Límite</string>
+    <string name="pref_spkfx_limiter_title">Ganancia Master (Limitador)</string>
+    <string name="pref_vhs_enable">Activado</string>
+    <string name="pref_vhs_summary_off">VHS+ está desactivado</string>
+    <string name="pref_vhs_summary_on">VHS+ está activado</string>
+    <string name="pref_vhs_title">Surround de auriculares +</string>
+    <string name="pref_viperddc_device">Dispositivo</string>
+    <string name="pref_viperddc_enable">Activado</string>
+    <string name="pref_viperddc_summary_off">ViPER-DDC está desactivado</string>
+    <string name="pref_viperddc_summary_on">ViPER-DDC está activado</string>
+    <string name="pref_vse_enable">Activado</string>
+    <string name="pref_vse_strength">Intensidad</string>
+    <string name="pref_vse_strength_title">Intensidad</string>
+    <string name="text_profilesaved_overwrite">¿Reemplazar perfil existente?</string>
+    <string name="text_drvuninst_confim">¿Desinstalar controlador V4A?</string>
+    <string name="pref_xloud_output_amplifer">Ganancia de salida</string>
+    <string name="pref_xloud_spk_highfreq">Respuesta alta</string>
+    <string name="pref_xloud_spk_lowfreq">Respuesta baja</string>
+
+    <string-array name="drvinst_prefer">
+        <item>La mejor calidad de audio</item>
+        <item>Alta calidad de audio</item>
+        <item>Ahorro de energía</item>
+    </string-array>
+    <string-array name="ui_prefer">
+        <item>Básico</item>
+        <item>Moderado</item>
+        <item>Profesional</item>
+    </string-array>
+
+    <string-array name="colorfulmusic_coeffs">
+        <item>Suave</item>
+        <item>Nivel 1</item>
+        <item>Nivel 2</item>
+        <item>Nivel 3</item>
+        <item>Nivel 4</item>
+        <item>Nivel 5</item>
+        <item>Nivel 6</item>
+        <item>Nivel 7</item>
+        <item>Extremo</item>
+    </string-array>
+
+    <string-array name="reverb_roomsize">
+        <item>25m²</item>
+        <item>36m²</item>
+        <item>49m²</item>
+        <item>64m²</item>
+        <item>81m²</item>
+        <item>100m²</item>
+        <item>121m²</item>
+        <item>203m²</item>
+        <item>347m²</item>
+        <item>652m²</item>
+        <item>1200m²</item>
+    </string-array>
+    <string-array name="cure_crossfeed">
+        <item>Suave</item>
+        <item>Moderado</item>
+        <item>Extremo</item>
+    </string-array>
+    <string-array name="playbackgain_ratio">
+        <item>Suave</item>
+        <item>Moderado</item>
+        <item>Extremo</item>
+    </string-array>
+    <string-array name="analogx_mode">
+        <item>Suave</item>
+        <item>Moderado</item>
+        <item>Extremo</item>
+    </string-array>
+    <string name="pref_fx_master_summary_off">V4A-FX está activado</string>
+    <string name="pref_fx_master_summary_on">V4A-FX está desactivado</string>
+    <string name="about_text"></string>
+    <string name="eq_preset_r_and_b">R&amp;B</string>
+    <string name="text_no">No</string>
+    <string name="text_permission_grant">Conceder permisos</string>
+    <string name="text_service_error">Comunicación con el servicio de ViPER4Android fallida.</string>
+    <string name="text_uiprefer_dialog">Selecciona tu preferencia</string>
+    <string name="text_usb">USB/Dock</string>
+    <string name="text_yes">Sí</string>
+    <string name="pref_ddc_brand">Marca:</string>
+</resources>

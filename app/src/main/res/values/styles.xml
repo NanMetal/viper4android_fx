@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="DarkTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlayCustom</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:listSeparatorTextViewStyle">@style/PreferenceCategoryFix</item>
+        <item name="android:textAppearanceLarge">@style/PreferenceTitleFix</item>
+        <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
+        <item name="android:alertDialogTheme">@style/AlertDialog</item>
+    </style>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/accentColor</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlayCustom</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:listSeparatorTextViewStyle">@style/PreferenceCategoryFix</item>
+        <item name="android:textAppearanceLarge">@style/PreferenceTitleFix</item>
+        <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
+        <item name="android:alertDialogTheme">@style/AlertDialog</item>
+    </style>
+
+    <style name="TextAppearance.Switch" parent="@android:style/TextAppearance.Material.Title" />
+
+    <style name="TextAppearance.Small.SwitchBar" parent="@android:style/TextAppearance.Material.Small">
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <!-- Used to color the switch bar controls -->
+    <style name="ThemeOverlay.SwitchBar" parent="@android:style/ThemeOverlay">
+        <!-- Used by controls, e.g. CheckBox, ProgressBar, etc. -->
+        <item name="android:colorAccent">@color/switch_accent_color</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+
+    <style name="PreferenceCategoryFix">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/accentColor</item>
+        <item name="android:padding">16dp</item>
+    </style>
+
+    <style name="PreferenceTitleFix">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="PreferenceStyleFix">
+        <item name="android:paddingLeft">50dp</item>
+        <item name="android:paddingRight">240dp</item>
+        <item name="android:textSize">50sp</item>
+    </style>
+
+    <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="spinBars">true</item>
+        <item name="color">@android:color/white</item>
+    </style>
+
+    <style name="WhiteAccent">
+        <item name="colorControlActivated">@color/white</item>
+        <item name="colorAccent">@color/white</item>
+    </style>
+
+    <style name="SwitchStyle">
+        <item name="colorControlActivated">@color/switch_accent_color</item>
+        <item name="android:color">@color/switch_accent_color</item>
+        <item name="colorAccent">@color/switch_accent_color</item>
+    </style>
+
+    <style name="DialogPreferenceFix">
+        <item name="android:positiveButtonText">@android:string/ok</item>
+        <item name="android:negativeButtonText">@android:string/cancel</item>
+        <item name="android:colorPrimary">@color/colorPrimary</item>
+        <item name="android:colorAccent">@color/accentColor</item>
+        <item name="android:textColorPrimary">@color/colorPrimary</item>
+    </style>
+
+    <style name="AlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:colorPrimary">@color/colorPrimary</item>
+        <item name="android:colorAccent">@color/colorPrimary</item>
+        <item name="colorAccent">@color/accentColor</item>
+    </style>
+
+    <style name="PreferenceThemeOverlayCustom">
+        <item name="android:colorAccent">@color/accentColor</item>
+        <item name="preferenceScreenStyle">@style/Preference.PreferenceScreen</item>
+        <item name="preferenceFragmentStyle">@style/PreferenceFragment</item>
+        <item name="preferenceCategoryStyle">@style/Preference.Category</item>
+        <item name="preferenceStyle">@style/Preference</item>
+        <item name="preferenceInformationStyle">@style/Preference.Information</item>
+        <item name="checkBoxPreferenceStyle">@style/Preference.CheckBoxPreference</item>
+        <item name="switchPreferenceCompatStyle">@style/Preference.SwitchPreferenceCompat</item>
+        <item name="dialogPreferenceStyle">@style/DialogPreferenceFix</item>
+        <item name="editTextPreferenceStyle">@style/Preference.DialogPreference.EditTextPreference</item>
+        <item name="preferenceFragmentListStyle">@style/PreferenceFragmentList</item>
+    </style>
+
+</resources>
