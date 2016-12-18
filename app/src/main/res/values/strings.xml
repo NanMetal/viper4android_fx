@@ -57,6 +57,7 @@ Use at your own risk. If such things happen, please turn this off."</string>
 ViPER-DDC is a true Hi-Fi audio processor and is used for headset correction. 
 ViPER-DDC now supports nearly 500 headphones, and will continue to support more as time goes on. 
 If you can't find your headset in the list, please disable this feature until yours is added."</string>
+    <string name="pref_ddc_brand">Brand:</string>
     <string name="pref_vse_title">Spectrum Extension</string>
     <string name="pref_vse_summary_on">Spectrum extension is enabled</string>
     <string name="pref_vse_summary_off">Spectrum extension is disabled</string>
@@ -259,6 +260,9 @@ Version %1$s (FX), Codename “Beautiful”.
     <string name="text_view_forum">Forum</string>
     <string name="text_checkupdate">Check Update</string>
     <string name="text_updatelink">http://vipersaudio.com/swupdate/viper4android/download.html</string>
+    <string name="text_visitblog">Visit blog</string>
+    <string name="text_reboot">Reboot now</string>
+
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="navigation_toggle_drawer">Switch to Drawer view</string>
@@ -286,7 +290,4 @@ Version %1$s (FX), Codename “Beautiful”.
     <string name="disabled">Disabled</string>
     <string name="text_permission_external">By not having the permission, the functionality of ViPER-DDC, Convolver and profile management will be disabled. You can later grant the permission.</string>
     <string name="text_permission_grant">Grant Permission</string>
-
-
-    <string name="pref_ddc_brand">Brand:</string>
 </resources>

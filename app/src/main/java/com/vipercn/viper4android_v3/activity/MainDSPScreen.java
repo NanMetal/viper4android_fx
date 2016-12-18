@@ -285,6 +285,11 @@ public final class MainDSPScreen extends PreferenceFragmentCompat implements OnS
                 v4a.saveProfileDialog();
                 return true;
             }
+            case "viper4android.settings.visitblog":
+            {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://vipersaudio.com/blog/")));
+                return true;
+            }
         }
         return super.onPreferenceTreeClick(preference);
     }

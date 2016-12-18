@@ -8,32 +8,30 @@
             android:entries="@array/ui_prefer"
             android:entryValues="@array/ui_prefer_values"
             android:key="viper4android.settings.uiprefer"
-            android:layout="@layout/preference_custom"
             android:title="@string/text_uiprefer"/>
     </PreferenceCategory>
     <PreferenceCategory android:title="Profiles">
         <Preference
             android:key="viper4android.settings.loadprofile"
-            android:layout="@layout/preference_custom"
             android:title="@string/text_loadfxprofile"/>
         <Preference
             android:key="viper4android.settings.saveprofile"
-            android:layout="@layout/preference_custom"
             android:title="@string/text_savefxprofile"/>
     </PreferenceCategory>
     <PreferenceCategory android:title="ViPER">
         <Preference
             android:key="viper4android.settings.driverinstall"
-            android:layout="@layout/preference_custom"
             android:title="@string/text_install"/>
         <Preference
             android:key="viper4android.settings.changelog"
-            android:layout="@layout/preference_custom"
             android:title="@string/text_changelog"/>
         <Preference
             android:key="viper4android.settings.checkupdate"
-            android:layout="@layout/preference_custom"
             android:title="@string/text_checkupdate"/>
+
+        <Preference
+            android:key="viper4android.settings.visitblog"
+            android:title="@string/text_visitblog"/>
 
     </PreferenceCategory>
 </PreferenceScreen>

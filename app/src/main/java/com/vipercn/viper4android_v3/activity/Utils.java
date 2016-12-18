@@ -718,8 +718,10 @@ public class Utils {
      */
 
     // Install ViPER4Android FX driver through roottools
-    private static int installDrv_FX_RootTools(Context ctx, String mDriverName) {
-        boolean isAddondSupported = false;
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    private static int installDrv_FX_RootTools(Context ctx, String mDriverName)
+    {
+        boolean isAddondSupported;
 
         // Make sure we can use external storage for temp directory
         if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED))
@@ -730,19 +732,19 @@ public class Utils {
             return 3;
 
         // Check if addon.d directory exists and copy script if supported
-        if (addondExists()) {
+        if (isAddondSupported = addondExists())
             copyAssetsToLocal(ctx, "91-v4a.sh", "91-v4a.sh");
-            isAddondSupported = true;
-        }
 
         // Lets acquire root first :)
-        if (!RootTools.isAccessGiven()) return 1;
+        if (!RootTools.isAccessGiven())
+            return 1;
 
         // Check chmod utils
         String mChmod;
         if (RootTools.checkUtil("chmod"))
             mChmod = "chmod";
-        else {
+        else
+        {
             if (RootTools.checkUtil("busybox") && RootTools.hasUtil("chmod", "busybox"))
                 mChmod = "busybox chmod";
             else if (RootTools.checkUtil("toolbox") && RootTools.hasUtil("chmod", "toolbox"))
@@ -752,205 +754,164 @@ public class Utils {
         }
 
         // Generate temp config file path, thanks to 'ste71m'
-        String mSystemConf = StaticEnvironment.getExternalStoragePath() + "v4a_audio_system.conf";
-        String mVendorConf = StaticEnvironment.getExternalStoragePath() + "v4a_audio_vendor.conf";
+        String system_audio_effects = StaticEnvironment.getExternalStoragePath() + "v4a_system_audio_effects.conf";
+        String vendor_audio_effects = StaticEnvironment.getExternalStoragePath() + "v4a_vendor_audio_effects.conf";
 
         // Check configuration
-        boolean bConfigModified = true;
-        bConfigModified &= checkFileContainsKeyLower("/system/etc/audio_effects.conf", "41d3c987-e6cf-11e3-a88a-11aba5d5c51b", "ASCII");
+        boolean bConfigModified = checkFileContainsKeyLower("/system/etc/audio_effects.conf", "41d3c987-e6cf-11e3-a88a-11aba5d5c51b", "ASCII");
         boolean ifVendorExists = RootTools.exists("/system/vendor/etc/audio_effects.conf");
         if (ifVendorExists)
         	bConfigModified &= checkFileContainsKeyLower("/system/vendor/etc/audio_effects.conf", "41d3c987-e6cf-11e3-a88a-11aba5d5c51b", "ASCII");
-        if (!bConfigModified) {
-	        // Copy configuration to temp directory
-	        if (ifVendorExists) {
-	            /* Copy to external storage, we dont need remount */
-	            RootTools.copyFile("/system/etc/audio_effects.conf", mSystemConf, false, false);
-	            RootTools.copyFile("/system/vendor/etc/audio_effects.conf", mVendorConf, false, false);
-	        } else {
-	            /* Copy to external storage, we dont need remount */
-	            RootTools.copyFile("/system/etc/audio_effects.conf", mSystemConf, false, false);
-	        }
-	        // Modifing configuration
-	        int modifyResult1 = modifyFXConfig(mSystemConf, mSystemConf + ".out");
-	        int modifyResult2 = 0;
-	        if (ifVendorExists) {
-	        	modifyResult2 = modifyFXConfig(mVendorConf, mVendorConf + ".out");
-	        }
-	        if ((modifyResult1 != 0) || (modifyResult2 != 0)) {
+
+        if (!bConfigModified)
+        {
+            // Copy audio_effects.conf to temp directory
+            RootTools.copyFile("/system/etc/audio_effects.conf", system_audio_effects, false, false);
+            if (ifVendorExists)
+                RootTools.copyFile("/system/vendor/etc/audio_effects.conf", vendor_audio_effects, false, false);
+
+            // Modifing configuration
+            int system_result = modifyFXConfig(system_audio_effects, system_audio_effects + ".out");
+            int vendor_result = ifVendorExists ? modifyFXConfig(system_audio_effects, system_audio_effects + ".out") : 0;
+
+            if ((system_result != 0) || (vendor_result != 0))
+            {
 	            /* Failed to modify the configuration, cleanup temp file(s) */
-	            try {
-	                if (ifVendorExists) {
-	                    if (!RootTools.deleteFileOrDirectory(mSystemConf, false))
-	                        new File(mSystemConf).delete();
-	                    if (!RootTools.deleteFileOrDirectory(mVendorConf, false))
-	                        new File(mVendorConf).delete();
-	                    if (!RootTools.deleteFileOrDirectory(mSystemConf + ".out", false))
-	                        new File(mSystemConf + ".out").delete();
-	                    if (!RootTools.deleteFileOrDirectory(mVendorConf + ".out", false))
-	                        new File(mVendorConf + ".out").delete();
-	                } else {
-	                    if (!RootTools.deleteFileOrDirectory(mSystemConf, false))
-	                        new File(mSystemConf).delete();
-	                    if (!RootTools.deleteFileOrDirectory(mSystemConf + ".out", false))
-	                        new File(mSystemConf + ".out").delete();
-	                }
-	                // Close all shells
-	                RootTools.closeAllShells();
-	                if (modifyResult1 != 0) return modifyResult1;
-	                else return modifyResult2;
-	            } catch (Exception e) {
-	                if (modifyResult1 != 0) return modifyResult1;
-	                else return modifyResult2;
-	            }
-	        }
+                try
+                {
+                    if (ifVendorExists)
+                    {
+                        if (!RootTools.deleteFileOrDirectory(vendor_audio_effects, false))
+                            new File(vendor_audio_effects).delete();
+                        if (!RootTools.deleteFileOrDirectory(vendor_audio_effects + ".out", false))
+                            new File(vendor_audio_effects + ".out").delete();
+                    }
+                    if (!RootTools.deleteFileOrDirectory(system_audio_effects, false))
+                        new File(system_audio_effects).delete();
+                    if (!RootTools.deleteFileOrDirectory(system_audio_effects + ".out", false))
+                        new File(system_audio_effects + ".out").delete();
+
+                    // Close all shells
+                    RootTools.closeAllShells();
+                    if (system_result != 0)
+                        return system_result;
+                    else
+                        return vendor_result;
+                }
+                catch (Exception e)
+                {
+                    if (system_result != 0)
+                        return system_result;
+                    else
+                        return vendor_result;
+                }
+            }
         }
 
         // Copy back to system
         boolean operationSuccess;
         String mBaseDrvPathName = getBasePath(ctx);
         String mAddondScriptPathName = mBaseDrvPathName;
-        if (mBaseDrvPathName.endsWith("/")) {
-            mBaseDrvPathName = mBaseDrvPathName + "libv4a_fx_ics.so";
-            if (isAddondSupported) {
-                mAddondScriptPathName = mAddondScriptPathName + "91-v4a.sh";
+
+        mBaseDrvPathName += mBaseDrvPathName.endsWith("/")? "libv4a_fx_ics.so" : "/libv4a_fx_ics.so";
+
+        if (isAddondSupported)
+            mAddondScriptPathName = mAddondScriptPathName + "91-v4a.sh";
+
+        try
+        {
+            operationSuccess = RootTools.remount("/system", "RW");
+
+            if (operationSuccess)
+                operationSuccess = RootTools.copyFile(mBaseDrvPathName, "/system/lib/soundfx/libv4a_fx_ics.so", false, false);
+
+            if (!bConfigModified)
+            {
+                if (operationSuccess)
+                    operationSuccess = RootTools.copyFile(system_audio_effects + ".out", "/system/etc/audio_effects.conf", false, false);
+                if (operationSuccess && ifVendorExists)
+                    operationSuccess = RootTools.copyFile(vendor_audio_effects + ".out", "/system/vendor/etc/audio_effects.conf", false, false);
             }
-        } else {
-            mBaseDrvPathName = mBaseDrvPathName + "/libv4a_fx_ics.so";
+
+            if (operationSuccess && isAddondSupported)
+                operationSuccess = RootTools.copyFile(mAddondScriptPathName, "/system/addon.d/91-v4a.sh", false, false);
+
+            if (!bConfigModified && ifVendorExists)
+            {
+                // Modify permission
+                Command ccSetPermission = new Command(0,
+                        mChmod + " 644 /system/etc/audio_effects.conf",
+                        mChmod + " 644 /system/vendor/etc/audio_effects.conf",
+                        mChmod + " 644 /system/lib/soundfx/libv4a_fx_ics.so");
+                RootTools.getShell(true).add(ccSetPermission);
+            }
+            else if (!bConfigModified)
+            {
+                // Set permissions
+                Command ccSetPermission = new Command(0,
+                        mChmod + " 0644 /system/etc/audio_effects.conf",
+                        mChmod + " 0644 /system/lib/soundfx/libv4a_fx_ics.so");
+                RootTools.getShell(true).add(ccSetPermission);
+            }
+            else
+            {
+                // Modify permission
+                Command ccSetPermission = new Command(0, mChmod + " 0644 /system/lib/soundfx/libv4a_fx_ics.so");
+                RootTools.getShell(true).add(ccSetPermission);
+            }
+
+            // Modify permission of addon.d script if applicable
             if (isAddondSupported)
-                mAddondScriptPathName = mAddondScriptPathName + "/91-v4a.sh";
-        }
-        try {
-            if (ifVendorExists) {
-                // Copy files
-                operationSuccess = RootTools.remount("/system", "RW");
-                if (operationSuccess) {
-                    operationSuccess = RootTools.copyFile(mBaseDrvPathName,
-                            "/system/lib/soundfx/libv4a_fx_ics.so", false, false);
-                }
-                if (!bConfigModified) {
-	                if (operationSuccess) {
-	                    operationSuccess = RootTools.copyFile(mSystemConf + ".out",
-	                            "/system/etc/audio_effects.conf", false, false);
-	                }
-	                if (operationSuccess) {
-	                    operationSuccess = RootTools.copyFile(mVendorConf + ".out",
-	                            "/system/vendor/etc/audio_effects.conf", false, false);
-	                }
-                }
-                if (operationSuccess && isAddondSupported) {
-                    operationSuccess = RootTools.copyFile(mAddondScriptPathName,
-                            "/system/addon.d/91-v4a.sh", false, false);
-                }
-
-                if (!bConfigModified) {
-	                // Modify permission
-	                Command ccSetPermission = new Command(0,
-	                        mChmod + " 644 /system/etc/audio_effects.conf",
-	                        mChmod + " 644 /system/vendor/etc/audio_effects.conf",
-	                        mChmod + " 644 /system/lib/soundfx/libv4a_fx_ics.so");
-	                RootTools.getShell(true).add(ccSetPermission);
-                } else {
-	                // Modify permission
-	                Command ccSetPermission = new Command(0,
-	                        mChmod + " 644 /system/lib/soundfx/libv4a_fx_ics.so");
-	                RootTools.getShell(true).add(ccSetPermission);
-                }
-
-                // Modify permission of addon.d script if applicable
-                if (isAddondSupported) {
-                    Command ccSetAddondPermission = new Command(0,
-                            mChmod + " 644 /system/addon.d/91-v4a.sh");
-                    RootTools.getShell(true).add(ccSetAddondPermission);
-                }
-
-                RootTools.remount("/system", "RO");
-            } else {
-                // Copy files
-                operationSuccess = RootTools.remount("/system", "RW");
-                if (operationSuccess) {
-                    operationSuccess = RootTools.copyFile(mBaseDrvPathName,
-                            "/system/lib/soundfx/libv4a_fx_ics.so", false, false);
-                }
-                if (!bConfigModified) {
-	                if (operationSuccess) {
-	                    operationSuccess = RootTools.copyFile(mSystemConf + ".out",
-	                            "/system/etc/audio_effects.conf", false, false);
-	                }
-                }
-                if (operationSuccess && isAddondSupported) {
-                    operationSuccess = RootTools.copyFile(mAddondScriptPathName,
-                            "/system/addon.d/91-v4a.sh", false, false);
-                }
-
-                if (!bConfigModified) {
-	                // Modify permission
-	                Command ccSetPermission = new Command(0,
-	                        mChmod + " 644 /system/etc/audio_effects.conf",
-	                        mChmod + " 644 /system/lib/soundfx/libv4a_fx_ics.so");
-	                RootTools.getShell(true).add(ccSetPermission);
-                } else {
-	                // Modify permission
-	                Command ccSetPermission = new Command(0,
-	                        mChmod + " 644 /system/lib/soundfx/libv4a_fx_ics.so");
-	                RootTools.getShell(true).add(ccSetPermission);
-                }
-
-                // Modify permission of addon.d script if applicable
-                if (isAddondSupported) {
-                    Command ccSetAddondPermission = new Command(0,
-                            mChmod + " 644 /system/addon.d/91-v4a.sh");
-                    RootTools.getShell(true).add(ccSetAddondPermission);
-                }
-
-                RootTools.remount("/system", "RO");
+            {
+                Command ccSetAddondPermission = new Command(0, mChmod + " 0644 /system/addon.d/91-v4a.sh");
+                RootTools.getShell(true).add(ccSetAddondPermission);
             }
-        } catch (Exception e) {
+
+            RootTools.remount("/system", "RO");
+        }
+        catch (Exception e)
+        {
             operationSuccess = false;
             Log.i("ViPER4Android", "Failed to copy back to /system, msg = " + e.getMessage());
         }
 
         /* Cleanup temp file(s) and close root shell */
-        try {
-        	if (!bConfigModified) {
-	            if (ifVendorExists) {
-	                if (!RootTools.deleteFileOrDirectory(mSystemConf, false)) {
-	                    new File(mSystemConf).delete();
-	                }
-	                if (!RootTools.deleteFileOrDirectory(mVendorConf, false)) {
-	                    new File(mVendorConf).delete();
-	                }
-	                if (!RootTools.deleteFileOrDirectory(mSystemConf + ".out", false)) {
-	                    new File(mSystemConf + ".out").delete();
-	                }
-	                if (!RootTools.deleteFileOrDirectory(mVendorConf + ".out", false)) {
-	                    new File(mVendorConf + ".out").delete();
-	                }
-	            } else {
-	                if (!RootTools.deleteFileOrDirectory(mSystemConf, false)) {
-	                    new File(mSystemConf).delete();
-	                }
-	                if (!RootTools.deleteFileOrDirectory(mSystemConf + ".out", false)) {
-	                    new File(mSystemConf + ".out").delete();
-	                }
-	            }
-        	}
+        try
+        {
+
+        	if (!bConfigModified)
+            {
+                if (!RootTools.deleteFileOrDirectory(system_audio_effects, false))
+                    new File(system_audio_effects).delete();
+                if (!RootTools.deleteFileOrDirectory(system_audio_effects + ".out", false))
+                    new File(system_audio_effects + ".out").delete();
+
+                if (ifVendorExists)
+                {
+                    if (!RootTools.deleteFileOrDirectory(vendor_audio_effects, false))
+                        new File(vendor_audio_effects).delete();
+                    if (!RootTools.deleteFileOrDirectory(vendor_audio_effects + ".out", false))
+                        new File(vendor_audio_effects + ".out").delete();
+                }
+            }
             // Close all shells
             RootTools.closeAllShells();
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             Log.i("ViPER4Android", "Copy back to /system cleanup failed, msg = " + e.getMessage());
-            if (!operationSuccess) {
-            	return 6;
-            } else {
-            	return 0;
-            }
+            if (!operationSuccess)
+                return 6;
+            else
+                return 0;
         }
 
         return 0;
     }
 
     // Install ViPER4Android FX driver
-    public static int installDrv_FX(Context ctx, String mDriverName) {
+    static int installDrv_FX(Context ctx, String mDriverName)
+    {
     	// Try install driver using RootTools
     	int method1Result = installDrv_FX_RootTools(ctx, mDriverName);
     	switch (method1Result) {
@@ -976,7 +937,8 @@ public class Utils {
      *
      * @param activity
      */
-    public static void restartActivity(final Activity activity) {
+    public static void restartActivity(final Activity activity)
+    {
         if (activity == null) return;
         final int enter_anim = android.R.anim.fade_in;
         final int exit_anim = android.R.anim.fade_out;

@@ -401,7 +401,21 @@ public final class ViPER4Android extends AppCompatActivity
                                             AlertDialog.Builder mResult = new AlertDialog.Builder(ctxInstance);
                                             mResult.setTitle("ViPER4Android");
                                             mResult.setMessage(ctxInstance.getResources().getString(R.string.text_drvinst_ok));
-                                            mResult.setNegativeButton(ctxInstance.getResources().getString(R.string.text_ok), null);
+                                            mResult.setPositiveButton(ctxInstance.getResources().getString(R.string.text_reboot), new DialogInterface.OnClickListener()
+                                            {
+                                                @Override
+                                                public void onClick(DialogInterface dialogInterface, int i)
+                                                {
+                                                    try
+                                                    {
+                                                        Runtime.getRuntime().exec(new String[]{"/system/bin/su", "-c", "reboot now"});
+                                                    }
+                                                    catch (IOException ignored)
+                                                    {
+                                                    }
+                                                }
+                                            });
+                                            mResult.setNegativeButton(ctxInstance.getResources().getString(android.R.string.ok), null);
                                             mResult.show();
                                         }
                                         else
@@ -428,7 +442,7 @@ public final class ViPER4Android extends AppCompatActivity
                                                     mResult.setMessage(ctxInstance.getResources().getString(R.string.text_drvinst_failed));
                                                     break;
                                             }
-                                            mResult.setNegativeButton(ctxInstance.getResources().getString(R.string.text_ok), null);
+                                            mResult.setNegativeButton(ctxInstance.getResources().getString(android.R.string.ok), null);
                                             mResult.show();
                                         }
                                     }
