@@ -2060,6 +2060,9 @@ public class ViPER4AndroidService extends Service
             case "viper4android.headphonefx.limiter":
                 mGeneralFX.setParameter_px4_vx4x1(PARAM_HPFX_LIMITER_THRESHOLD, (Integer)value);
                 break;
+            case "viper4android.speakerfx.limiter":
+                mGeneralFX.setParameter_px4_vx4x1(PARAM_SPKFX_LIMITER_THRESHOLD, (Integer)value);
+                break;
         }
 
         return true;
