@@ -212,7 +212,6 @@
     </string-array>
     <string name="pref_fx_master_summary_off">V4A-FX está activado</string>
     <string name="pref_fx_master_summary_on">V4A-FX está desactivado</string>
-    <string name="about_text"></string>
     <string name="eq_preset_r_and_b">R&amp;B</string>
     <string name="text_no">No</string>
     <string name="text_permission_grant">Conceder permisos</string>
@@ -221,4 +220,8 @@
     <string name="text_usb">USB/Dock</string>
     <string name="text_yes">Sí</string>
     <string name="pref_ddc_brand">Marca:</string>
+    <string name="text_visitblog">Visitar blog</string>
+    <string name="text_view_forum">Foro</string>
+    <string name="text_showtrayicon">Mostrar notificación</string>
+    <string name="text_reboot">Reiniciar ahora</string>
 </resources>

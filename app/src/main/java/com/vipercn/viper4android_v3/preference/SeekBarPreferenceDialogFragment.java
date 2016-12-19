@@ -1,5 +1,6 @@
 package com.vipercn.viper4android_v3.preference;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -58,6 +59,7 @@ public class SeekBarPreferenceDialogFragment extends PreferenceDialogFragmentCom
         }
     }
 
+    @SuppressLint("InflateParams")
     @Override
     protected void onPrepareDialogBuilder(AlertDialog.Builder builder)
     {

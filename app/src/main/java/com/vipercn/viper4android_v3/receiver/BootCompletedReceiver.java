@@ -11,9 +11,13 @@ import com.vipercn.viper4android_v3.activity.V4AJniInterface;
 import com.vipercn.viper4android_v3.activity.ViPER4Android;
 import com.vipercn.viper4android_v3.service.ViPER4AndroidService;
 
-public class BootCompletedReceiver extends BroadcastReceiver {
+public class BootCompletedReceiver extends BroadcastReceiver
+{
     @Override
-    public void onReceive(Context context, Intent intent) {
+    public void onReceive(Context context, Intent intent)
+    {
+        if (!"android.intent.action.BOOT_COMPLETED".equals(intent.getAction()))
+            return;
         Log.i("ViPER4Android", "System booted.");
 
         boolean bJniLoaded = V4AJniInterface.CheckLibrary();
@@ -25,7 +29,9 @@ public class BootCompletedReceiver extends BroadcastReceiver {
         {
             Log.i("ViPER4Android", "Start viper4android audio service.");
             context.startService(new Intent(context, ViPER4AndroidService.class));
-        } else {
+        }
+        else
+        {
             Log.i("ViPER4Android", "Driver not configured correctly.");
         }
     }

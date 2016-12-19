@@ -155,9 +155,9 @@ class BuildProp {
 		String destBuildpropFile = "/system/build.prop";
 
 		/* Save key-values to temp file */
-		FileOutputStream fosOutput = null;
-		OutputStreamWriter oswOutput = null;
-		BufferedWriter bufferOutput = null;
+		FileOutputStream fosOutput;
+		OutputStreamWriter oswOutput;
+		BufferedWriter bufferOutput;
 		try {
 			fosOutput = new FileOutputStream(tempBuildpropFile);
 			oswOutput = new OutputStreamWriter(fosOutput, "ASCII");

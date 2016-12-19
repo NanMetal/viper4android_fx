@@ -13,7 +13,6 @@ import com.vipercn.viper4android_v3.R;
 public class TopSwitchPreference extends SwitchPreference
 {
     private final Listener mListener = new Listener();
-    private Switch mSwitch;
 
     private class Listener implements CompoundButton.OnCheckedChangeListener
     {
@@ -50,7 +49,7 @@ public class TopSwitchPreference extends SwitchPreference
     public void onBindViewHolder(PreferenceViewHolder holder)
     {
         super.onBindViewHolder(holder);
-        mSwitch = (Switch)holder.findViewById(R.id.switch_widget);
+        Switch mSwitch = (Switch)holder.findViewById(R.id.switch_widget);
         mSwitch.setChecked(isChecked());
         mSwitch.setOnCheckedChangeListener(mListener);
         mSwitch.setText(isChecked()? R.string.enabled : R.string.disabled);

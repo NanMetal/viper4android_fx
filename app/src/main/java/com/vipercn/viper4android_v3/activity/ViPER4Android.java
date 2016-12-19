@@ -154,7 +154,7 @@ public final class ViPER4Android extends AppCompatActivity
         Editor editSettings = prefSettings.edit();
         if (editSettings != null) {
             editSettings.putString("viper4android.settings.lastversion", mVersion);
-            editSettings.commit();
+            editSettings.apply();
         }
     }
 
@@ -178,7 +178,7 @@ public final class ViPER4Android extends AppCompatActivity
         if (editSettings != null)
         {
             editSettings.putString("viper4android.settings.ddc_db_compatible", mVersion);
-            editSettings.commit();
+            editSettings.apply();
         }
     }
 
@@ -196,7 +196,7 @@ public final class ViPER4Android extends AppCompatActivity
         if (editSettings != null)
         {
             editSettings.putBoolean("viper4android.settings.onlineactive", true);
-            editSettings.commit();
+            editSettings.apply();
         }
     }
 
@@ -565,7 +565,7 @@ public final class ViPER4Android extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener()
         {
             @Override
-            public boolean onNavigationItemSelected(MenuItem menuItem)
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem)
             {
                 if (menuItem.getItemId() == 5)
                 {
@@ -806,7 +806,7 @@ public final class ViPER4Android extends AppCompatActivity
                             if(which == DialogInterface.BUTTON_POSITIVE)
                             {
                                 item.setChecked(true);
-                                prefSettings.edit().putBoolean("viper4android.global.forceenable.enable", true).commit();
+                                prefSettings.edit().putBoolean("viper4android.global.forceenable.enable", true).apply();
                             }
                         }
                     });
@@ -816,9 +816,7 @@ public final class ViPER4Android extends AppCompatActivity
                         public void onClick(DialogInterface dialog, int which)
                         {
                             if(which == DialogInterface.BUTTON_NEGATIVE)
-                            {
                                 cancel[0] = true;
-                            }
                         }
                     });
                     mDlgWarning.show();
@@ -826,7 +824,7 @@ public final class ViPER4Android extends AppCompatActivity
                 if(!cancel[0]  && item.isChecked())
                 {
                     item.setChecked(!item.isChecked());
-                    prefSettings.edit().putBoolean("viper4android.global.forceenable.enable", item.isChecked()).commit();
+                    prefSettings.edit().putBoolean("viper4android.global.forceenable.enable", item.isChecked()).apply();
                 }
                 return true;
 
@@ -843,29 +841,19 @@ public final class ViPER4Android extends AppCompatActivity
 
                     String mDrvNEONEnabled = getResources().getString(R.string.text_yes);
                     if (!mAudioServiceInstance.getDriverNEON())
-                    {
                         mDrvNEONEnabled = getResources().getString(R.string.text_no);
-                    }
                     String mDrvEnabled = getResources().getString(R.string.text_yes);
                     if (!mAudioServiceInstance.getDriverEnabled())
-                    {
                         mDrvEnabled = getResources().getString(R.string.text_no);
-                    }
                     String mDrvUsable = getResources().getString(R.string.text_normal);
                     if (!mAudioServiceInstance.getDriverCanWork())
-                    {
                         mDrvUsable = getResources().getString(R.string.text_abnormal);
-                    }
                     String mDrvSupportFmt = getResources().getString(R.string.text_supported);
                     if (!mAudioServiceInstance.getDriverSupportFormat())
-                    {
                         mDrvSupportFmt = getResources().getString(R.string.text_unsupported);
-                    }
                     String mDrvProcess = getResources().getString(R.string.text_yes);
                     if (!mAudioServiceInstance.getDriverProcess())
-                    {
                         mDrvProcess = getResources().getString(R.string.text_no);
-                    }
 
                     Utils.AudioEffectUtils aeuUtils = new Utils().new AudioEffectUtils();
                     int[] iaDrvVer = aeuUtils.getViper4AndroidEngineVersion();
@@ -900,7 +888,7 @@ public final class ViPER4Android extends AppCompatActivity
                 {
                     public void onClick(DialogInterface dialog, int which)
                     {
-                        prefSettings.edit().putString("viper4android.settings.compatiblemode", which == 0 ? "global" : "local").commit();
+                        prefSettings.edit().putString("viper4android.settings.compatiblemode", which == 0 ? "global" : "local").apply();
                         dialog.dismiss();
                     }
                 }).setCancelable(true).create();
@@ -918,7 +906,7 @@ public final class ViPER4Android extends AppCompatActivity
                 }
                 Editor edit = prefSettings.edit();
                 edit.putBoolean("viper4android.settings.show_notify_icon", enableNotify);
-                edit.commit();
+                edit.apply();
                 // Tell background service to deal with the notification icon
                 if (enableNotify) {
                     sendBroadcast(new Intent(ACTION_SHOW_NOTIFY));
@@ -996,6 +984,7 @@ public final class ViPER4Android extends AppCompatActivity
     // Methods
     //==================================
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     public void saveProfileDialog()
     {
         // We first list existing profiles
@@ -1077,9 +1066,11 @@ public final class ViPER4Android extends AppCompatActivity
         final ArrayList<String> profilenames = Utils.getProfileList(StaticEnvironment.getV4aProfilePath());
 
         /* Scan version 2 profiles */
-        File[] profiles = profileDir.listFiles(new FileFilter() {
-			@Override
-			public boolean accept(File pathname) {
+        File[] profiles = profileDir.listFiles(new FileFilter()
+        {
+            @Override
+            public boolean accept(File pathname)
+            {
                 return pathname.isDirectory();
             }
         });
@@ -1089,22 +1080,25 @@ public final class ViPER4Android extends AppCompatActivity
 
         /* Write all profiles to a new array */
         final String[] names = new String[profilenames.size()];
-        for (int i = 0; i < profilenames.size(); i++) {
-        	names[i] = profilenames.get(i);
+        for (int i = 0; i < profilenames.size(); i++)
+        {
+            names[i] = profilenames.get(i);
         }
 
         /* Show profile list box */
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(R.string.text_loadfxprofile)
-                .setItems(names, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        loadProfile(names[which]);
-                    }
-                });
+        builder.setTitle(R.string.text_loadfxprofile).setItems(names, new DialogInterface.OnClickListener()
+        {
+            public void onClick(DialogInterface dialog, int which)
+            {
+                loadProfile(names[which]);
+            }
+        });
         builder.create().show();
     }
 
-    private void saveProfile(String name) {
+    private void saveProfile(String name)
+    {
         final String spDir = getApplicationInfo().dataDir + "/shared_prefs/";
 
         // Copy the SharedPreference to our output directory
@@ -1114,13 +1108,15 @@ public final class ViPER4Android extends AppCompatActivity
         Log.i("ViPER4Android", "Saving profile to " + profileDir.getAbsolutePath());
 
         final String packageName = SHARED_PREFERENCES_BASENAME + ".";
-
-        try {
+        try
+        {
             copy(new File(spDir + packageName + BLUETOOTH + ".xml"), new File(profileDir, packageName + BLUETOOTH + ".xml"));
             copy(new File(spDir + packageName + HEADSET + ".xml"), new File(profileDir, packageName + HEADSET + ".xml"));
             copy(new File(spDir + packageName + SPEAKER + ".xml"), new File(profileDir, packageName + SPEAKER + ".xml"));
             copy(new File(spDir + packageName + USB + ".xml"), new File(profileDir, packageName + USB + ".xml"));
-        } catch (IOException e) {
+        }
+        catch (IOException e)
+        {
             Log.e("ViPER4Android", "Cannot save preset: " + e.getMessage());
         }
     }

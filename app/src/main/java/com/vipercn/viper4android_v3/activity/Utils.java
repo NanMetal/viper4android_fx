@@ -37,16 +37,21 @@ import java.util.StringTokenizer;
 
 public class Utils {
 
-    public class AudioEffectUtils {
+    public class AudioEffectUtils
+    {
 
         private AudioEffect.Descriptor[] mAudioEffectList;
         private boolean mHasViPER4AndroidEngine;
         private final int[] mV4AEngineVersion = new int[4];
 
-        public AudioEffectUtils() {
-            try {
+        public AudioEffectUtils()
+        {
+            try
+            {
                 mAudioEffectList = AudioEffect.queryEffects();
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 mAudioEffectList = null;
                 mHasViPER4AndroidEngine = false;
                 mV4AEngineVersion[0] = 0;
@@ -56,7 +61,8 @@ public class Utils {
                 Log.e("ViPER4Android", "Failed to query audio effects");
                 return;
             }
-            if (mAudioEffectList == null) {
+            if (mAudioEffectList == null)
+            {
                 mHasViPER4AndroidEngine = false;
                 mV4AEngineVersion[0] = 0;
                 mV4AEngineVersion[1] = 0;
@@ -68,24 +74,28 @@ public class Utils {
 
             AudioEffect.Descriptor mViper4AndroidEngine = null;
             Log.i("ViPER4Android", "Found " + mAudioEffectList.length + " effects");
-            for (int i = 0; i < mAudioEffectList.length; i++) {
-                if (mAudioEffectList[i] == null) continue;
-                try {
+            for (int i = 0; i < mAudioEffectList.length; i++)
+            {
+                if (mAudioEffectList[i] == null)
+                    continue;
+                try
+                {
                     AudioEffect.Descriptor aeEffect = mAudioEffectList[i];
-                    Log.i("ViPER4Android", "[" + (i + 1) + "], " + aeEffect.name + ", "
-                            + aeEffect.implementor);
-                    if (aeEffect.uuid.equals(ViPER4AndroidService.ID_V4A_GENERAL_FX)) {
-                        Log.i("ViPER4Android", "Perfect, found ViPER4Android engine at "
-                                + (i + 1));
+                    Log.i("ViPER4Android", "[" + (i + 1) + "], " + aeEffect.name + ", " + aeEffect.implementor);
+                    if (aeEffect.uuid.equals(ViPER4AndroidService.ID_V4A_GENERAL_FX))
+                    {
+                        Log.i("ViPER4Android", "Perfect, found ViPER4Android engine at " + (i + 1));
                         mViper4AndroidEngine = aeEffect;
                     }
-                } catch (Exception e) {
-                    Log.e("ViPER4Android",
-                            "AudioEffect Descriptor error , msg = " + e.getMessage());
+                }
+                catch (Exception e)
+                {
+                    Log.e("ViPER4Android", "AudioEffect Descriptor error , msg = " + e.getMessage());
                 }
             }
 
-            if (mViper4AndroidEngine == null) {
+            if (mViper4AndroidEngine == null)
+            {
                 Log.i("ViPER4Android", "ViPER4Android engine not found");
                 mHasViPER4AndroidEngine = false;
                 mV4AEngineVersion[0] = 0;
@@ -96,17 +106,22 @@ public class Utils {
             }
 
             // Extract engine version
-            try {
+            try
+            {
                 String v4aVersionLine = mViper4AndroidEngine.name;
-                if (v4aVersionLine.contains("[") && v4aVersionLine.contains("]")) {
-                    if (v4aVersionLine.length() >= 23) {
+                if (v4aVersionLine.contains("[") && v4aVersionLine.contains("]"))
+                {
+                    if (v4aVersionLine.length() >= 23)
+                    {
                         // v4aVersionLine should be "ViPER4Android [A.B.C.D]"
                         v4aVersionLine = v4aVersionLine.substring(15);
                         while (v4aVersionLine.endsWith("]"))
                             v4aVersionLine = v4aVersionLine.substring(0, v4aVersionLine.length() - 1);
+
                         // v4aVersionLine should be "A.B.C.D"
                         String[] mVerBlocks = v4aVersionLine.split("\\.");
-                        if (mVerBlocks.length == 4) {
+                        if (mVerBlocks.length == 4)
+                        {
                             mV4AEngineVersion[0] = Integer.parseInt(mVerBlocks[0]);
                             mV4AEngineVersion[1] = Integer.parseInt(mVerBlocks[1]);
                             mV4AEngineVersion[2] = Integer.parseInt(mVerBlocks[2]);
@@ -121,9 +136,10 @@ public class Utils {
                         return;
                     }
                 }
-            } catch (Exception e) {
-                Log.e("ViPER4Android",
-                        "ViPER4Android engine version exception: " + e.getMessage());
+            }
+            catch (Exception e)
+            {
+                Log.e("ViPER4Android", "ViPER4Android engine version exception: " + e.getMessage());
             }
 
             Log.e("ViPER4Android", "Cannot extract ViPER4Android engine version");
@@ -134,26 +150,31 @@ public class Utils {
             mV4AEngineVersion[3] = 0;
         }
 
-        public AudioEffect.Descriptor[] getAudioEffectList() {
+        public AudioEffect.Descriptor[] getAudioEffectList()
+        {
             return mAudioEffectList;
         }
 
-        public boolean isViPER4AndroidEngineFound() {
+        public boolean isViPER4AndroidEngineFound()
+        {
             return mHasViPER4AndroidEngine;
         }
 
-        public int[] getViper4AndroidEngineVersion() {
+        public int[] getViper4AndroidEngineVersion()
+        {
             return mV4AEngineVersion;
         }
     }
 
-    public static class CpuInfo {
+    public static class CpuInfo
+    {
 
         private boolean mCpuHasNEON;
         private boolean mCpuHasVFP;
 
         // Lets read /proc/cpuinfo in java
-        private boolean readCpuInfo() {
+        private boolean readCpuInfo()
+        {
             String mCPUInfoFile = "/proc/cpuinfo";
             FileReader cpuInfoReader = null;
             BufferedReader bufferReader = null;
@@ -162,26 +183,29 @@ public class Utils {
             mCpuHasVFP = false;
 
             // Find "Features" line, extract neon and vfp
-            try {
+            try
+            {
                 cpuInfoReader = new FileReader(mCPUInfoFile);
                 bufferReader = new BufferedReader(cpuInfoReader);
-                while (true) {
+                while (true)
+                {
                     String mLine = bufferReader.readLine();
-                    if (mLine == null) {
+                    if (mLine == null)
                         break;
-                    }
                     mLine = mLine.trim();
-                    if (mLine.startsWith("Features")) {
+                    if (mLine.startsWith("Features"))
+                    {
                         Log.i("ViPER4Android", "CpuInfo[java] = <" + mLine + ">");
                         StringTokenizer stBlock = new StringTokenizer(mLine);
-                        while (stBlock.hasMoreElements()) {
+                        while (stBlock.hasMoreElements())
+                        {
                             String mFeature = stBlock.nextToken();
-                            if (mFeature != null) {
-                                if (mFeature.equalsIgnoreCase("neon")) {
+                            if (mFeature != null)
+                            {
+                                if (mFeature.equalsIgnoreCase("neon"))
                                     mCpuHasNEON = true;
-                                } else if (mFeature.equalsIgnoreCase("vfp")) {
+                                else if (mFeature.equalsIgnoreCase("vfp"))
                                     mCpuHasVFP = true;
-                                }
                             }
                         }
                     }
@@ -191,83 +215,87 @@ public class Utils {
                 bufferReader = null;
                 cpuInfoReader = null;
 
-                Log.i("ViPER4Android", "cpuInfo[java] = NEON:" + mCpuHasNEON + ", VFP:"
-                        + mCpuHasVFP);
+                Log.i("ViPER4Android", "cpuInfo[java] = NEON:" + mCpuHasNEON + ", VFP:" + mCpuHasVFP);
                 return !(!mCpuHasNEON && !mCpuHasVFP);
-            } catch (IOException e) {
-                try {
-                    if (bufferReader != null) {
+            }
+            catch (IOException e)
+            {
+                try
+                {
+                    if (bufferReader != null)
                         bufferReader.close();
-                    }
-                    if (cpuInfoReader != null) {
+                    if (cpuInfoReader != null)
                         cpuInfoReader.close();
-                    }
-                    bufferReader = null;
-                    cpuInfoReader = null;
                     return false;
-                } catch (Exception ex) {
-                    bufferReader = null;
-                    cpuInfoReader = null;
+                }
+                catch (Exception ex)
+                {
                     return false;
                 }
             }
         }
 
         // Lets read /proc/cpuinfo in jni
-        private void readCPUInfoJni() {
+        private void readCPUInfoJni()
+        {
             mCpuHasNEON = V4AJniInterface.IsCPUSupportNEON();
             mCpuHasVFP = V4AJniInterface.IsCPUSupportVFP();
         }
 
         // Buffered result
-        public CpuInfo() {
+        public CpuInfo()
+        {
             mCpuHasNEON = false;
             mCpuHasVFP = false;
-            if (!readCpuInfo()) {
+            if (!readCpuInfo())
                 readCPUInfoJni();
-            }
         }
 
-        public boolean hasNEON() {
+        public boolean hasNEON()
+        {
             return mCpuHasNEON;
         }
 
-        public boolean hasVFP() {
+        public boolean hasVFP()
+        {
             return mCpuHasVFP;
         }
     }
 
     // Check if Busybox is installed & offer installation if not found
-    public static boolean isBusyBoxInstalled(Context ctx) {
+    public static boolean isBusyBoxInstalled(Context ctx)
+    {
         boolean isBusyBoxAvailable = RootTools.isBusyboxAvailable();
-        if (!isBusyBoxAvailable) {
+        if (!isBusyBoxAvailable)
+        {
             final Context ctxInstance = ctx;
             AlertDialog.Builder mBusyBox = new AlertDialog.Builder(ctxInstance);
             mBusyBox.setTitle("ViPER4Android");
             mBusyBox.setMessage(ctxInstance.getResources().getString(R.string.text_no_busybox));
-            mBusyBox.setPositiveButton(ctxInstance.getResources().getString(R.string.text_ok),
-                    new DialogInterface.OnClickListener() {
+            mBusyBox.setPositiveButton(ctxInstance.getResources().getString(R.string.text_ok), new DialogInterface.OnClickListener()
+            {
                 @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    try {
-                        ctxInstance.startActivity(new Intent(Intent.ACTION_VIEW, Uri
-                                .parse("market://details?id=stericson.busybox")));
-                    } catch (android.content.ActivityNotFoundException anfe) {
-                        ctxInstance.startActivity(new Intent(
-                                Intent.ACTION_VIEW,
-                                Uri.parse("http://play.google.com/store/apps/details?id=stericson.busybox")));
+                public void onClick(DialogInterface dialog, int which)
+                {
+                    try
+                    {
+                        ctxInstance.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=stericson.busybox")));
+                    }
+                    catch (android.content.ActivityNotFoundException anfe)
+                    {
+                        ctxInstance.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=stericson.busybox")));
                     }
                 }
             });
-            mBusyBox.setNegativeButton(ctxInstance.getResources().getString(R.string.text_cancel),
-                    new DialogInterface.OnClickListener() {
+            mBusyBox.setNegativeButton(ctxInstance.getResources().getString(R.string.text_cancel), new DialogInterface.OnClickListener()
+            {
                 @Override
-                public void onClick(DialogInterface dialog, int which) {
+                public void onClick(DialogInterface dialog, int which)
+                {
                     dialog.dismiss();
                 }
             });
             mBusyBox.show();
-            mBusyBox = null;
         }
 
         return isBusyBoxAvailable;
@@ -278,7 +306,8 @@ public class Utils {
      * The return value of this method is useless
      * Because this method will return before warning dialog dismiss
      */
-    public static void proceedBuildProp(Context ctx) {
+    public static void proceedBuildProp(Context ctx)
+    {
         final String LPA_DECODE = "lpa.decode";
         final String LPA_USE_STAGEFRIGHT = "lpa.use.stagefright";
         final String TUNNEL_DECODE = "tunnel.decode";
@@ -287,52 +316,69 @@ public class Utils {
         final BuildProp mBuildPropUtil = new BuildProp();
         mBuildPropUtil.initializeBuildprop();
 
-        if (mBuildPropUtil.propExists(LPA_DECODE)) {
-            if (mBuildPropUtil.getProp(LPA_DECODE).equalsIgnoreCase("true")) {
-            	Log.i("ViPER4Android", "[LPA] lpa.decode = true");
+        if (mBuildPropUtil.propExists(LPA_DECODE))
+        {
+            if (mBuildPropUtil.getProp(LPA_DECODE).equalsIgnoreCase("true"))
+            {
+                Log.i("ViPER4Android", "[LPA] lpa.decode = true");
                 mBuildProp.add(LPA_DECODE);
-            } else Log.i("ViPER4Android", "[LPA] lpa.decode = false");
+            }
+            else
+                Log.i("ViPER4Android", "[LPA] lpa.decode = false");
         }
-        if (mBuildPropUtil.propExists(LPA_USE_STAGEFRIGHT)) {
-            if (mBuildPropUtil.getProp(LPA_USE_STAGEFRIGHT).equalsIgnoreCase("true")) {
-            	Log.i("ViPER4Android", "[LPA] lpa.use.stagefright = true");
+        if (mBuildPropUtil.propExists(LPA_USE_STAGEFRIGHT))
+        {
+            if (mBuildPropUtil.getProp(LPA_USE_STAGEFRIGHT).equalsIgnoreCase("true"))
+            {
+                Log.i("ViPER4Android", "[LPA] lpa.use.stagefright = true");
                 mBuildProp.add(LPA_USE_STAGEFRIGHT);
-            } else Log.i("ViPER4Android", "[LPA] lpa.use.stagefright = false");
+            }
+            else
+                Log.i("ViPER4Android", "[LPA] lpa.use.stagefright = false");
         }
-        if (mBuildPropUtil.propExists(TUNNEL_DECODE)) {
-            if (mBuildPropUtil.getProp(TUNNEL_DECODE).equalsIgnoreCase("true")) {
-            	Log.i("ViPER4Android", "[LPA] tunnel.decode = true");
+        if (mBuildPropUtil.propExists(TUNNEL_DECODE))
+        {
+            if (mBuildPropUtil.getProp(TUNNEL_DECODE).equalsIgnoreCase("true"))
+            {
+                Log.i("ViPER4Android", "[LPA] tunnel.decode = true");
                 mBuildProp.add(TUNNEL_DECODE);
-            } else Log.i("ViPER4Android", "[LPA] tunnel.decode = false");
+            }
+            else
+                Log.i("ViPER4Android", "[LPA] tunnel.decode = false");
         }
 
-        if (!mBuildProp.isEmpty()) {
+        if (!mBuildProp.isEmpty())
+        {
             AlertDialog.Builder mModifyWarn = new AlertDialog.Builder(ctx);
             mModifyWarn.setTitle("ViPER4Android");
             mModifyWarn.setMessage(ctx.getResources().getString(R.string.text_modifybuildprop));
-            mModifyWarn.setPositiveButton(ctx.getResources().getString(R.string.text_ok),
-                    new DialogInterface.OnClickListener() {
+            mModifyWarn.setPositiveButton(ctx.getResources().getString(R.string.text_ok), new DialogInterface.OnClickListener()
+            {
                 @Override
-                public void onClick(DialogInterface dialog, int which) {
-                	for (String buildProp : mBuildProp) {
-                		mBuildPropUtil.setProp(buildProp, "false");
-                	}
-                	mBuildPropUtil.commitBuildprop(StaticEnvironment.getExternalStoragePath());
-                	mBuildPropUtil.initializeBuildprop();
+                public void onClick(DialogInterface dialog, int which)
+                {
+                    for (String buildProp : mBuildProp)
+                    {
+                        mBuildPropUtil.setProp(buildProp, "false");
+                    }
+                    mBuildPropUtil.commitBuildprop(StaticEnvironment.getExternalStoragePath());
+                    mBuildPropUtil.initializeBuildprop();
                 }
             });
-            mModifyWarn.setNegativeButton(ctx.getResources().getString(R.string.text_cancel),
-                    new DialogInterface.OnClickListener() {
+            mModifyWarn.setNegativeButton(ctx.getResources().getString(R.string.text_cancel), new DialogInterface.OnClickListener()
+            {
                 @Override
-                public void onClick(DialogInterface dialog, int which) {
-                	Log.i("ViPER4Android", "[LPA] User canceled");
+                public void onClick(DialogInterface dialog, int which)
+                {
+                    Log.i("ViPER4Android", "[LPA] User canceled");
                     dialog.dismiss();
                 }
             });
             mModifyWarn.show();
-            mModifyWarn = null;
-        } else {
-        	Log.i("ViPER4Android", "LPA feature not enabled");
+        }
+        else
+        {
+            Log.i("ViPER4Android", "LPA feature not enabled");
         }
     }
 
@@ -343,12 +389,18 @@ public class Utils {
     }
 
     // Read file list from path
-    public static void getFileNameList(File path, String fileExt, ArrayList<String> fileList) {
-        if (path.isDirectory()) {
+    public static void getFileNameList(File path, String fileExt, ArrayList<String> fileList)
+    {
+        if (path.isDirectory())
+        {
             File[] files = path.listFiles();
-            if (null == files) return;
-            for (File file : files) getFileNameList(file, fileExt, fileList);
-        } else {
+            if (null == files)
+                return;
+            for (File file : files)
+                getFileNameList(file, fileExt, fileList);
+        }
+        else
+        {
             String filePath = path.getAbsolutePath();
             String fileName = filePath.substring(filePath.lastIndexOf("/") + 1);
             if (fileName.toLowerCase(Locale.US).endsWith(fileExt))
@@ -357,20 +409,27 @@ public class Utils {
     }
 
     // Get profile name from a file
-    private static String getProfileName(String mProfileFileName) {
-        try {
+    private static String getProfileName(String mProfileFileName)
+    {
+        try
+        {
             FileInputStream fisInput = new FileInputStream(mProfileFileName);
             InputStreamReader isrInput = new InputStreamReader(fisInput, "UTF-8");
             BufferedReader bufferInput = new BufferedReader(isrInput);
             String mProfileName = "";
-            while (true) {
+            while (true)
+            {
                 String mLine = bufferInput.readLine();
-                if (mLine == null) break;
-                if (mLine.startsWith("#")) continue;
+                if (mLine == null)
+                    break;
+                if (mLine.startsWith("#"))
+                    continue;
 
                 String[] mChunks = mLine.split("=");
-                if (mChunks.length != 2) continue;
-                if (mChunks[0].trim().equalsIgnoreCase("profile_name")) {
+                if (mChunks.length != 2)
+                    continue;
+                if (mChunks[0].trim().equalsIgnoreCase("profile_name"))
+                {
                     mProfileName = mChunks[1];
                     break;
                 }
@@ -378,90 +437,103 @@ public class Utils {
             bufferInput.close();
             isrInput.close();
             fisInput.close();
-            bufferInput = null;
-            isrInput = null;
-            fisInput = null;
             return mProfileName;
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             return "";
         }
     }
 
     // Get profile name list
-    public static ArrayList<String> getProfileList(String mProfileDir) {
-        try {
+    public static ArrayList<String> getProfileList(String mProfileDir)
+    {
+        try
+        {
             File fProfileDirHandle = new File(mProfileDir);
             ArrayList<String> profileList = new ArrayList<>();
             getFileNameList(fProfileDirHandle, ".prf", profileList);
 
             ArrayList<String> mProfileNameList = new ArrayList<>();
-            for (String mProfileList : profileList) {
+            for (String mProfileList : profileList)
+            {
                 String mFileName = mProfileDir + mProfileList;
                 String mName = getProfileName(mFileName);
                 mProfileNameList.add(mName.trim());
             }
-            profileList = null;
-
             return mProfileNameList;
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             return new ArrayList<>();
         }
     }
 
     // Load profile from file
     public static boolean loadProfileV1(String mProfileName, String mProfileDir,
-            String mPreferenceName, Context ctx) {
-        try {
+            String mPreferenceName, Context ctx)
+    {
+        try
+        {
             File fProfileDirHandle = new File(mProfileDir);
             ArrayList<String> profileFileList = new ArrayList<>();
             getFileNameList(fProfileDirHandle, ".prf", profileFileList);
             String mProfileFileName = "";
-            for (String mProfileFileList : profileFileList) {
+            for (String mProfileFileList : profileFileList)
+            {
                 String mFileName = mProfileDir + mProfileFileList;
                 String mName = getProfileName(mFileName);
-                if (mProfileName.trim().equalsIgnoreCase(mName.trim())) {
+                if (mProfileName.trim().equalsIgnoreCase(mName.trim()))
+                {
                     mProfileFileName = mFileName;
                     break;
                 }
             }
-            if (mProfileFileName.equals("")) return false;
+            if (mProfileFileName.equals(""))
+                return false;
 
-            SharedPreferences preferences = ctx.getSharedPreferences(mPreferenceName,
-                    Context.MODE_PRIVATE);
-            if (preferences != null) {
+            SharedPreferences preferences = ctx.getSharedPreferences(mPreferenceName, Context.MODE_PRIVATE);
+            if (preferences != null)
+            {
                 FileInputStream fisInput = new FileInputStream(mProfileFileName);
                 InputStreamReader isrInput = new InputStreamReader(fisInput, "UTF-8");
                 BufferedReader bufferInput = new BufferedReader(isrInput);
                 Editor e = preferences.edit();
-                while (true) {
+                while (true)
+                {
                     String mLine = bufferInput.readLine();
-                    if (mLine == null) break;
-                    if (mLine.startsWith("#")) continue;
+                    if (mLine == null)
+                        break;
+                    if (mLine.startsWith("#"))
+                        continue;
 
                     String[] mChunks = mLine.split("=");
-                    if (mChunks.length != 3) continue;
-                    if (mChunks[1].trim().equalsIgnoreCase("boolean")) {
+                    if (mChunks.length != 3)
+                        continue;
+                    if (mChunks[1].trim().equalsIgnoreCase("boolean"))
+                    {
                         String mParameter = mChunks[0];
                         boolean mValue = Boolean.valueOf(mChunks[2]);
                         e.putBoolean(mParameter, mValue);
-                    } else if (mChunks[1].trim().equalsIgnoreCase("string")) {
+                    }
+                    else if (mChunks[1].trim().equalsIgnoreCase("string"))
+                    {
                         String mParameter = mChunks[0];
                         String mValue = mChunks[2];
                         e.putString(mParameter, mValue);
-                    } else {
                     }
                 }
                 e.commit();
                 bufferInput.close();
                 isrInput.close();
                 fisInput.close();
-                bufferInput = null;
-                isrInput = null;
-                fisInput = null;
                 return true;
-            } else
+            }
+            else
                 return false;
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             Log.i("ViPER4Android", "loadProfile Error: " + e.getMessage());
             return false;
         }
@@ -472,9 +544,9 @@ public class Utils {
     {
     	szKey = szKey.trim();
 
-		FileInputStream fisInput = null;
-		InputStreamReader isrInput = null;
-		BufferedReader bufferInput = null;
+		FileInputStream fisInput;
+		InputStreamReader isrInput;
+		BufferedReader bufferInput;
 		try {
 			boolean bFoundKey = false;
 			fisInput = new FileInputStream(szFilePathName);
@@ -492,24 +564,12 @@ public class Utils {
 			bufferInput.close();
 			isrInput.close();
 			fisInput.close();
-			fisInput = null;
-			isrInput = null;
-			bufferInput = null;
 			return bFoundKey;
 		} catch (FileNotFoundException e) {
-			fisInput = null;
-			isrInput = null;
-			bufferInput = null;
 			return false;
 		} catch (UnsupportedEncodingException e) {
-			fisInput = null;
-			isrInput = null;
-			bufferInput = null;
 			return false;
 		} catch (IOException e) {
-			fisInput = null;
-			isrInput = null;
-			bufferInput = null;
 			return false;
 		}
     }
@@ -523,14 +583,16 @@ public class Utils {
      */
 
     // Modify audio_effects.conf
-    private static int modifyFXConfig(String mInputFile, String mOutputFile) {
-        Log.i("ViPER4Android", "Editing audio configuration, input = " + mInputFile
-                + ", output = " + mOutputFile);
-        try {
+    private static int modifyFXConfig(String mInputFile, String mOutputFile)
+    {
+        Log.i("ViPER4Android", "Editing audio configuration, input = " + mInputFile + ", output = " + mOutputFile);
+        try
+        {
             long inputFileLength = getFileLength(mInputFile);
-            if (inputFileLength < 32) {
-            	// We need at least 32-bytes for basic structure
-            	return 5;
+            if (inputFileLength < 32)
+            {
+                // We need at least 32-bytes for basic structure
+                return 5;
             }
             new File(mOutputFile).delete();
 
@@ -544,14 +606,17 @@ public class Utils {
 
             // Check whether the file has already modified
             boolean configModified = false;
-            bufferInput.mark((int) inputFileLength);
-            do {
+            bufferInput.mark((int)inputFileLength);
+            do
+            {
                 String mLine = bufferInput.readLine();
-                if (mLine == null) break;
-                if (mLine.trim().startsWith("#")) continue;
+                if (mLine == null)
+                    break;
+                if (mLine.trim().startsWith("#"))
+                    continue;
                 /* This is v4a effect uuid */
-                if (mLine.toLowerCase(Locale.US)
-                        .contains("41d3c987-e6cf-11e3-a88a-11aba5d5c51b")) {
+                if (mLine.toLowerCase(Locale.US).contains("41d3c987-e6cf-11e3-a88a-11aba5d5c51b"))
+                {
                     Log.i("ViPER4Android", "Source file has been modified, line = " + mLine);
                     configModified = true;
                     break;
@@ -560,12 +625,15 @@ public class Utils {
 
             boolean libraryAppend = false;
             boolean effectAppend = false;
-            if (configModified) {
+            if (configModified)
+            {
                 // Already modified, just copy
                 bufferInput.reset();
-                do {
+                do
+                {
                     String mLine = bufferInput.readLine();
-                    if (mLine == null) break;
+                    if (mLine == null)
+                        break;
                     bufferOutput.write(mLine + "\n");
                 } while (true);
                 bufferOutput.flush();
@@ -578,24 +646,32 @@ public class Utils {
                 fosOutput.close();
 
                 return 0;
-            } else {
+            }
+            else
+            {
                 // Append v4a library and effect to configuration
                 bufferInput.reset();
-                do {
+                do
+                {
                     String mLine = bufferInput.readLine();
-                    if (mLine == null) break;
-                    if (mLine.trim().startsWith("#")) {
-                    	bufferOutput.write(mLine + "\n");
-                    	continue;
+                    if (mLine == null)
+                        break;
+                    if (mLine.trim().startsWith("#"))
+                    {
+                        bufferOutput.write(mLine + "\n");
+                        continue;
                     }
-                    if (mLine.trim().equalsIgnoreCase("libraries {") && !libraryAppend) {
+                    if (mLine.trim().equalsIgnoreCase("libraries {") && !libraryAppend)
+                    {
                         // Append library
                         bufferOutput.write(mLine + "\n");
                         bufferOutput.write("  v4a_fx {\n");
                         bufferOutput.write("    path /system/lib/soundfx/libv4a_fx_ics.so\n");
                         bufferOutput.write("  }\n");
                         libraryAppend = true;
-                    } else if (mLine.trim().equalsIgnoreCase("effects {") && !effectAppend) {
+                    }
+                    else if (mLine.trim().equalsIgnoreCase("effects {") && !effectAppend)
+                    {
                         // Append effect
                         bufferOutput.write(mLine + "\n");
                         bufferOutput.write("  v4a_standard_fx {\n");
@@ -603,7 +679,9 @@ public class Utils {
                         bufferOutput.write("    uuid 41d3c987-e6cf-11e3-a88a-11aba5d5c51b\n");
                         bufferOutput.write("  }\n");
                         effectAppend = true;
-                    } else bufferOutput.write(mLine + "\n");
+                    }
+                    else
+                        bufferOutput.write(mLine + "\n");
                 } while (true);
                 bufferOutput.flush();
 
@@ -614,63 +692,66 @@ public class Utils {
                 oswOutput.close();
                 fosOutput.close();
 
-                if (libraryAppend && effectAppend) return 0;
+                if (libraryAppend && effectAppend)
+                    return 0;
                 return 4;
             }
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             Log.i("ViPER4Android", "Error: " + e.getMessage());
             return 3;
         }
     }
 
     // Check if addon.d folder exists for script installation (Device kernel dependant)
-    private static boolean addondExists() {
+    private static boolean addondExists()
+    {
         File file = new File("/system/addon.d/");
         return file.exists() && file.isDirectory();
     }
 
     // Get application data path
-    public static String getBasePath(Context ctx) {
+    public static String getBasePath(Context ctx)
+    {
         Context mContext = ctx.getApplicationContext();
         String mBasePath = "";
-        if (mContext != null) {
-            // No try catch the mContext != null will prevent a possible NPE here
-            if (mContext.getFilesDir().exists()) {
+        if (mContext != null)
+            if (mContext.getFilesDir().exists())
                 mBasePath = mContext.getFilesDir().getAbsolutePath();
-            } else if (!mContext.getFilesDir().mkdirs()) {
-                mBasePath = "";
-            }
-        } else {
-            mBasePath = "";
-        }
+
         return mBasePath;
     }
 
     // Copy assets to local
-    public static boolean copyAssetsToLocal(Context ctx, String mSourceName, String mDestinationName) {
+    public static boolean copyAssetsToLocal(Context ctx, String mSourceName, String mDestinationName)
+    {
         String mBasePath = getBasePath(ctx);
-        if (mBasePath.equals("")) return false;
+        if (mBasePath.equals(""))
+            return false;
         mDestinationName = mBasePath + "/" + mDestinationName;
 
         InputStream myInput;
         OutputStream myOutput;
         String outFileName = mDestinationName;
-        try {
+        try
+        {
             File hfOutput = new File(mDestinationName);
-            if (hfOutput.exists()) hfOutput.delete();
+            if (hfOutput.exists())
+                hfOutput.delete();
             myOutput = new FileOutputStream(outFileName);
             myInput = ctx.getAssets().open(mSourceName);
-            byte[] buffer = new byte[4096]; /* 4K page size */
+            byte[] buffer = new byte[4096];
             int length;
             while ((length = myInput.read(buffer)) > 0)
                 myOutput.write(buffer, 0, length);
+
             myOutput.flush();
             myInput.close();
             myOutput.close();
-            buffer = null;
-            myInput = null;
-            myOutput = null;
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             Log.i("ViPER4Android", "CopyAssetsToLocal() failed, msg = " + e.getMessage());
             return false;
         }
@@ -707,6 +788,8 @@ public class Utils {
     }
 
     /*
+     * Install driver using RootTools.
+     *
      * Driver installation return value:
      * 0: Success
      * 1: Acquire root failed

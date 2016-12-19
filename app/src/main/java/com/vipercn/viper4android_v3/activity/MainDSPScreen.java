@@ -1,8 +1,8 @@
 package com.vipercn.viper4android_v3.activity;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -33,7 +33,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-import java.util.Locale;
 
 public final class MainDSPScreen extends PreferenceFragmentCompat implements OnSharedPreferenceChangeListener, PreferenceManager.OnPreferenceTreeClickListener
 {
@@ -48,7 +47,7 @@ public final class MainDSPScreen extends PreferenceFragmentCompat implements OnS
     public void onCreatePreferences(Bundle bundle, String s)
     {
         PreferenceManager prefManager = getPreferenceManager();
-        prefManager.setSharedPreferencesMode(Context.MODE_WORLD_READABLE);
+        //prefManager.setSharedPreferencesMode(Context.MODE_WORLD_READABLE);
         prefManager.setSharedPreferencesName(ViPER4Android.SHARED_PREFERENCES_BASENAME + ".settings");
 
         SharedPreferences prefSettings = prefManager.getSharedPreferences();
@@ -92,6 +91,7 @@ public final class MainDSPScreen extends PreferenceFragmentCompat implements OnS
         getPreferenceManager().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
     }
 
+    @SuppressLint("InflateParams")
     @Override
     public RecyclerView onCreateRecyclerView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
     {
@@ -135,7 +135,7 @@ public final class MainDSPScreen extends PreferenceFragmentCompat implements OnS
                 /* Tell listpreference that it must display something else. */
                 if (!desiredValue.equals(preset.getEntry()))
                 {
-                    sharedPreferences.edit().putString(PREF_KEY_EQ, desiredValue).commit();
+                    sharedPreferences.edit().putString(PREF_KEY_EQ, desiredValue).apply();
                     preset.refreshFromPreference();
                 }
                 break;
@@ -145,7 +145,7 @@ public final class MainDSPScreen extends PreferenceFragmentCompat implements OnS
                 String newValue = sharedPreferences.getString(key, null);
                 if (!EQ_VALUE_CUSTOM.equals(newValue))
                 {
-                    sharedPreferences.edit().putString(PREF_KEY_CUSTOM_EQ, newValue).commit();
+                    sharedPreferences.edit().putString(PREF_KEY_CUSTOM_EQ, newValue).apply();
                     /* Now tell the equalizer that it must display something else. */
                     EqualizerPreference eq = (EqualizerPreference)findPreference(PREF_KEY_CUSTOM_EQ);
                     eq.refreshFromPreference();
@@ -159,7 +159,7 @@ public final class MainDSPScreen extends PreferenceFragmentCompat implements OnS
                     SharedPreferences prefSettings = getActivity().getSharedPreferences(ViPER4Android.SHARED_PREFERENCES_BASENAME + ".settings", 0);
                     if (!prefSettings.getBoolean("viper4android.settings.vse.notice", false))
                     {
-                        prefSettings.edit().putBoolean("viper4android.settings.vse.notice", true).commit();
+                        prefSettings.edit().putBoolean("viper4android.settings.vse.notice", true).apply();
                         AlertDialog.Builder mNotice = new AlertDialog.Builder(getActivity());
                         mNotice.setTitle("ViPER4Android");
                         mNotice.setMessage(getActivity().getResources().getString(R.string.pref_vse_tips));
@@ -176,7 +176,7 @@ public final class MainDSPScreen extends PreferenceFragmentCompat implements OnS
                     SharedPreferences prefSettings = getActivity().getSharedPreferences(ViPER4Android.SHARED_PREFERENCES_BASENAME + ".settings", 0);
                     if (!prefSettings.getBoolean("viper4android.settings.viperddc.notice", false))
                     {
-                        prefSettings.edit().putBoolean("viper4android.settings.viperddc.notice", true).commit();
+                        prefSettings.edit().putBoolean("viper4android.settings.viperddc.notice", true).apply();
                         AlertDialog.Builder mNotice = new AlertDialog.Builder(getActivity());
                         mNotice.setTitle("ViPER4Android");
                         mNotice.setMessage(getActivity().getResources().getString(R.string.pref_viperddc_tips));
@@ -202,14 +202,7 @@ public final class MainDSPScreen extends PreferenceFragmentCompat implements OnS
                 return true;
             case "viper4android.settings.changelog":
             {
-                // Deal with changelog file name
-                String mLocale = Locale.getDefault().getLanguage() + "_" + Locale.getDefault().getCountry();
-                String mChangelog_AssetsName = "Changelog_";
-                if (mLocale.equalsIgnoreCase("zh_CN"))
-                    mChangelog_AssetsName = mChangelog_AssetsName + "zh_CN";
-                else
-                    mChangelog_AssetsName = mLocale.equalsIgnoreCase("zh_TW") ? mChangelog_AssetsName + "zh_TW" : mChangelog_AssetsName + "en_US";
-
+                String mChangelog_AssetsName = "Changelog_en_US";
                 mChangelog_AssetsName = mChangelog_AssetsName + ".txt";
                 String mChangeLog = "";
                 InputStream isChglogHandle;

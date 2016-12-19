@@ -28,7 +28,6 @@ import java.util.Map;
 
 public class DDCListPreferenceDialogFragment extends PreferenceDialogFragmentCompat
 {
-    private ArrayList<DDC> mDDCEntries;
     private Map<String, List<DDC>> mItems = new HashMap<>();
     private DDC mSelectedDDC, mInitialDDC;
 
@@ -139,6 +138,7 @@ public class DDCListPreferenceDialogFragment extends PreferenceDialogFragmentCom
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
             {
                 mListView.setItemChecked(i, true);
+                @SuppressWarnings("unchecked")
                 ArrayList<String> values = (ArrayList<String>)mListView.getTag();
                 mSelectedDDC = preference.getDDCbyID(values.get(i));
 
@@ -165,8 +165,7 @@ public class DDCListPreferenceDialogFragment extends PreferenceDialogFragmentCom
 
     public void setDDCEntries(ArrayList<DDC> ddcEntries)
     {
-        this.mDDCEntries = ddcEntries;
-        for(DDC ddc : mDDCEntries)
+        for(DDC ddc : ddcEntries)
         {
             if(!mItems.containsKey(ddc.getBrand()))
                 this.mItems.put(ddc.getBrand(), new ArrayList<DDC>());

@@ -71,9 +71,8 @@ public class V4AJniInterface {
         }
         // Convert unicode string to multi-byte string
         byte[] stringBytes = mIRFileName.getBytes(Charset.forName("US-ASCII"));
-        if (stringBytes == null) {
+        if (stringBytes.length == 0)
             return null;
-        }
         // Call native
         return GetImpulseResponseInfo(stringBytes);
     }
@@ -84,9 +83,8 @@ public class V4AJniInterface {
         }
         // Convert unicode string to multi-byte string
         byte[] stringBytes = mIRFileName.getBytes(Charset.forName("US-ASCII"));
-        if (stringBytes == null) {
+        if (stringBytes.length == 0)
             return null;
-        }
         // Call native
         return ReadImpulseResponse(stringBytes);
     }

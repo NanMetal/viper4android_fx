@@ -57,7 +57,7 @@ public class SwitchBar extends LinearLayout implements CompoundButton.OnCheckedC
     private String mLabel;
     private String mSummary;
 
-    private ArrayList<OnSwitchChangeListener> mSwitchChangeListeners = new ArrayList<OnSwitchChangeListener>();
+    private ArrayList<OnSwitchChangeListener> mSwitchChangeListeners = new ArrayList<>();
 
     private static int[] MARGIN_ATTRIBUTES = { R.attr.switchBarMarginStart, R.attr.switchBarMarginEnd };
 
@@ -247,8 +247,8 @@ public class SwitchBar extends LinearLayout implements CompoundButton.OnCheckedC
         private SavedState(Parcel in)
         {
             super(in);
-            checked = (Boolean)in.readValue(null);
-            visible = (Boolean)in.readValue(null);
+            checked = (Boolean)in.readValue(getClass().getClassLoader());
+            visible = (Boolean)in.readValue(getClass().getClassLoader());
         }
 
         @Override
