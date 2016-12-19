@@ -666,7 +666,7 @@ public class Utils {
                         // Append library
                         bufferOutput.write(mLine + "\n");
                         bufferOutput.write("  v4a_fx {\n");
-                        bufferOutput.write("    path /system/lib/soundfx/libv4a_fx_ics.so\n");
+                        bufferOutput.write("    path /system/lib/soundfx/libv4a_fx_jb.so\n");
                         bufferOutput.write("  }\n");
                         libraryAppend = true;
                     }
@@ -724,7 +724,7 @@ public class Utils {
     }
 
     // Copy assets to local
-    public static boolean copyAssetsToLocal(Context ctx, String mSourceName, String mDestinationName)
+    static boolean copyAssetsToLocal(Context ctx, String mSourceName, String mDestinationName)
     {
         String mBasePath = getBasePath(ctx);
         if (mBasePath.equals(""))
@@ -760,7 +760,8 @@ public class Utils {
     }
 
     // Uninstall ViPER4Android FX driver
-    public static void uninstallDrv_FX() {
+    static void uninstallDrv_FX()
+    {
         /*
          * When uninstalling the v4a driver, we just delete the driver file (or
          * just uninstall the apk). Android will check all effect drivers before
@@ -768,21 +769,23 @@ public class Utils {
          */
 
         // Lets acquire root first :)
-        if (!RootTools.isAccessGiven()) {
+        if (!RootTools.isAccessGiven())
             return;
-        }
 
         // Then delete the driver
-        String mDriverPathName = "/system/lib/soundfx/libv4a_fx_ics.so";
-        try {
-            if (RootTools.exists(mDriverPathName)) {
+        String mDriverPathName = "/system/lib/soundfx/libv4a_fx_jb.so";
+        try
+        {
+            if (RootTools.exists(mDriverPathName))
+            {
                 RootTools.deleteFileOrDirectory(mDriverPathName, true);
-                if (RootTools.exists("/system/addon.d/91-v4a.sh")) {
+                if (RootTools.exists("/system/addon.d/91-v4a.sh"))
                     RootTools.deleteFileOrDirectory("/system/addon.d/91-v4a.sh", true);
-                }
             }
             RootTools.closeAllShells();
-        } catch (IOException e) {
+        }
+        catch (IOException e)
+        {
             Log.i("ViPER4Android", "Driver uninstall failed, msg = " + e.getMessage());
         }
     }
@@ -811,7 +814,7 @@ public class Utils {
             return 2;
 
         // Copy driver assets to local
-        if (!copyAssetsToLocal(ctx, mDriverName, "libv4a_fx_ics.so"))
+        if (!copyAssetsToLocal(ctx, mDriverName, "libv4a_fx_jb.so"))
             return 3;
 
         // Check if addon.d directory exists and copy script if supported
@@ -896,7 +899,7 @@ public class Utils {
         String mBaseDrvPathName = getBasePath(ctx);
         String mAddondScriptPathName = mBaseDrvPathName;
 
-        mBaseDrvPathName += mBaseDrvPathName.endsWith("/")? "libv4a_fx_ics.so" : "/libv4a_fx_ics.so";
+        mBaseDrvPathName += mBaseDrvPathName.endsWith("/")? "libv4a_fx_jb.so" : "/libv4a_fx_jb.so";
 
         if (isAddondSupported)
             mAddondScriptPathName = mAddondScriptPathName + "91-v4a.sh";
@@ -906,7 +909,7 @@ public class Utils {
             operationSuccess = RootTools.remount("/system", "RW");
 
             if (operationSuccess)
-                operationSuccess = RootTools.copyFile(mBaseDrvPathName, "/system/lib/soundfx/libv4a_fx_ics.so", false, false);
+                operationSuccess = RootTools.copyFile(mBaseDrvPathName, "/system/lib/soundfx/libv4a_fx_jb.so", false, false);
 
             if (!bConfigModified)
             {
@@ -925,7 +928,7 @@ public class Utils {
                 Command ccSetPermission = new Command(0,
                         mChmod + " 644 /system/etc/audio_effects.conf",
                         mChmod + " 644 /system/vendor/etc/audio_effects.conf",
-                        mChmod + " 644 /system/lib/soundfx/libv4a_fx_ics.so");
+                        mChmod + " 644 /system/lib/soundfx/libv4a_fx_jb.so");
                 RootTools.getShell(true).add(ccSetPermission);
             }
             else if (!bConfigModified)
@@ -933,13 +936,13 @@ public class Utils {
                 // Set permissions
                 Command ccSetPermission = new Command(0,
                         mChmod + " 0644 /system/etc/audio_effects.conf",
-                        mChmod + " 0644 /system/lib/soundfx/libv4a_fx_ics.so");
+                        mChmod + " 0644 /system/lib/soundfx/libv4a_fx_jb.so");
                 RootTools.getShell(true).add(ccSetPermission);
             }
             else
             {
                 // Modify permission
-                Command ccSetPermission = new Command(0, mChmod + " 0644 /system/lib/soundfx/libv4a_fx_ics.so");
+                Command ccSetPermission = new Command(0, mChmod + " 0644 /system/lib/soundfx/libv4a_fx_jb.so");
                 RootTools.getShell(true).add(ccSetPermission);
             }
 

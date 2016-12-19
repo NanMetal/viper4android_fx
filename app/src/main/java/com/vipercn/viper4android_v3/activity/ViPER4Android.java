@@ -322,20 +322,16 @@ public final class ViPER4Android extends AppCompatActivity
 
     private static String determineCPUWithDriver(String mQual)
     {
-        String mDriverFile = "libv4a_fx_";
+        String mDriverFile = "libv4a_fx_jb_";
 
-        if (Build.VERSION.SDK_INT >= 18)
-            mDriverFile += "jb_";
-        else
-            mDriverFile += "ics_";
-
-        if (Build.CPU_ABI.toLowerCase().contains("x86"))
-        {
-            // x86 architecture
-            mDriverFile += "X86.so";
-            Log.i("ViPER4Android", "Driver selection = " + mDriverFile);
-            return mDriverFile;
-        }
+        for(String str : Build.SUPPORTED_ABIS)
+            if(str.contains("x86"))
+            {
+                // x86 architecture
+                mDriverFile += "X86.so";
+                Log.i("ViPER4Android", "Driver selection = " + mDriverFile);
+                return mDriverFile;
+            }
 
         Utils.CpuInfo mCPUInfo = new Utils.CpuInfo();
         if (mCPUInfo.hasNEON())
